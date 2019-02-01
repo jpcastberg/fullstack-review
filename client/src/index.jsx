@@ -14,8 +14,16 @@ class App extends React.Component {
   }
 
   search (term) {
-    console.log(`${term} was searched`);
-    // TODO
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:1128/repos',
+      data: term,
+      contentType: 'text/html; charset=utf-8',
+      type: 'text',
+      success: () => {
+        console.log(`${term} was searched`);
+      }
+    });
   }
 
   render () {
