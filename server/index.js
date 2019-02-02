@@ -31,10 +31,11 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   //query database for top 25 newest repos
   //respond w/ info from database
-  db.getTop25ByDate((err, data) => {
+  let success = (err, data) => {
     if (err) return console.error(err);
-    console.log(data);
-  });
+    res.status(200).json(data);
+  }
+  db.getTop25ByDate(success);
 });
 
 let port = 1128;

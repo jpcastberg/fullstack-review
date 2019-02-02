@@ -26,6 +26,7 @@ class App extends React.Component {
       type: 'text',
       success: () => {
         console.log(`${term} was searched`);
+        this.getRepos();
       }
     });
   }
@@ -34,8 +35,8 @@ class App extends React.Component {
     $.ajax({
       method: 'GET',
       url: 'http://localhost:1128/repos',
-      dataType: 'application/json',
       success: (data) => {
+        console.log('great success');
         this.setState({repos: data});
       }
     })
@@ -44,8 +45,8 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos}/>
     </div>)
   }
 }

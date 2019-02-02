@@ -1,0 +1,10 @@
+body {
+  background-color: azure;
+}
+
+.repo {
+  border: solid;
+  border-color: rgba(0, 0, 0, 0.575);
+  padding: 8px;
+
+}
