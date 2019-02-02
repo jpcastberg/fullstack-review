@@ -28,7 +28,15 @@ let saveDataToDB = (data, callback) => {
   });
 }
 
-module.exports.save = saveDataToDB;
+let getTop25ByDate = (callback) => {
+  Repo.find({})
+  .sort({createdAt: -1})
+  .limit(25)
+  .exec(callback);
+}
+
+module.exports.saveDataToDB = saveDataToDB;
+module.exports.getTop25ByDate = getTop25ByDate;
 
 // [
 //   // MongoDB adds the _id field with an ObjectId if _id is not present

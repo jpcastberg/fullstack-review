@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const getReposByUsername = require('../helpers/github.js').getReposByUsername;
-const saveDataToDB = require('../database/index.js').save;
+const db = require('../database/index.js');
 const filterValues = require('../helpers/databaseHelpers.js').filterValues;
 
 let app = express();
@@ -15,7 +15,7 @@ app.post('/repos', function (req, res) {
   let successfulGithubGETHandler = (err, githubRes, body) => {
     if (err) return console.error(err);
     let userRepos = JSON.parse(body).map(filterValues);
-    saveDataToDB(userRepos, (err) => {
+    db.saveDataToDB(userRepos, (err) => {
       if (err) {
         console.error(err);
         res.status(500).end();
@@ -24,17 +24,17 @@ app.post('/repos', function (req, res) {
       console.log('Data successfully posted!')
       res.status(201).end();
     });
-    
   }
   getReposByUsername(username, successfulGithubGETHandler);
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
+  //query database for top 25 newest repos
+  //respond w/ info from database
+  db.getTop25ByDate((err, data) => {
+    if (err) return console.error(err);
+    console.log(data);
+  });
 });
 
 let port = 1128;

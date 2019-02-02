@@ -13,6 +13,10 @@ class App extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.getRepos();
+  }
+
   search (term) {
     $.ajax({
       method: 'POST',
@@ -24,6 +28,17 @@ class App extends React.Component {
         console.log(`${term} was searched`);
       }
     });
+  }
+
+  getRepos () {
+    $.ajax({
+      method: 'GET',
+      url: 'http://localhost:1128/repos',
+      dataType: 'application/json',
+      success: (data) => {
+        this.setState({repos: data});
+      }
+    })
   }
 
   render () {
