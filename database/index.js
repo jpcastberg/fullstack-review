@@ -10,10 +10,10 @@ let repoSchema = mongoose.Schema({
   // TODO: your schema here!
   repoId: Number,
   creator: String,
+  createdAt: Date,
   repoName: String,
   url: String,
-  description: String,
-  forks_count: Number
+  description: String
 });
 
 let Repo = mongoose.model('Repo', repoSchema);

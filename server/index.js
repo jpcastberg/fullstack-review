@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const getReposByUsername = require('../helpers/github.js').getReposByUsername;
 const saveDataToDB = require('../database/index.js').save;
+const filterValues = require('../helpers/databaseHelpers.js').filterValues;
 
 let app = express();
 
@@ -11,22 +12,19 @@ app.use(bodyParser.text({type:"*/*"}));
 
 app.post('/repos', function (req, res) {
   let username = req.body;
-  let successfulGithubGETHandler = (err, res, body) => {
-    if (err) {
-      console.error(err);
-      return;
-    } else {
-      let userRepos = JSON.parse(body);
-      saveDataToDB(userRepos, (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).end();
-          return;
-        }
-        console.log('Data successfully posted!')
-        res.status(201).end();
-      });
-    }
+  let successfulGithubGETHandler = (err, githubRes, body) => {
+    if (err) return console.error(err);
+    let userRepos = JSON.parse(body).map(filterValues);
+    saveDataToDB(userRepos, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).end();
+        return;
+      }
+      console.log('Data successfully posted!')
+      res.status(201).end();
+    });
+    
   }
   getReposByUsername(username, successfulGithubGETHandler);
   // This route should take the github username provided
