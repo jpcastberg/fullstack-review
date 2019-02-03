@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect('mongodb://jpcastberg:password123@ds049631.mlab.com:49631/fetcher');
+
+//un jpcastberg pass password123
 
 // let db = mongoose.connection
 
