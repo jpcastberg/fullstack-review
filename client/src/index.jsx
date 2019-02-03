@@ -20,7 +20,7 @@ class App extends React.Component {
   search (term) {
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:1128/repos',
+      url: 'https://calm-bastion-97370.herokuapp.com/repos',
       data: term,
       contentType: 'text/html; charset=utf-8',
       type: 'text',
@@ -34,7 +34,7 @@ class App extends React.Component {
   getRepos () {
     $.ajax({
       method: 'GET',
-      url: 'http://localhost:1128/repos',
+      url: 'https://calm-bastion-97370.herokuapp.com/repos',
       success: (data) => {
         console.log('great success');
         this.setState({repos: data});
